@@ -29,6 +29,18 @@ export default function TextEditor() {
             s.disconnect()
         }
     }, [])
+    
+
+    useEffect(()=>{
+        if(socket == null || quill == null) return
+       const interval = setInterval(()=>{
+        socket.emit('save-document',quill.getContents())
+       },2000)
+       return ()=>{
+        clearInterval(interval)
+       }
+    },[socket,quill])
+
 
 useEffect(()=>{
     if(socket == null || quill == null) return
